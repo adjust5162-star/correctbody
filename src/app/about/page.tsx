@@ -5,7 +5,7 @@ import { medicalNotice } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "재활운동 소개",
-  description: "리커버핏의 재활운동 상담 방식과 안전 원칙을 소개합니다.",
+  description: "바른몸체형관리센터의 재활운동 상담 방식과 안전 원칙을 소개합니다.",
 };
 
 export default function AboutPage() {
@@ -14,7 +14,7 @@ export default function AboutPage() {
       <Section
         eyebrow="About"
         title="재활운동은 현재 상태를 살피는 것에서 시작합니다"
-        description="리커버핏은 통증 부위, 생활 동작, 운동 경험을 함께 확인하고 무리하지 않는 범위의 운동 방향을 안내합니다."
+        description="바른몸체형관리센터는 통증 부위, 생활 동작, 운동 경험을 함께 확인하고 무리하지 않는 범위의 운동 방향을 안내합니다."
       >
         <div className="grid gap-5 md:grid-cols-3">
           {["상태 확인", "단계별 운동", "생활 적용"].map((item, index) => (

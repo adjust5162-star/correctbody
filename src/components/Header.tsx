@@ -11,9 +11,12 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/70 bg-white/82 backdrop-blur-xl">
-      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="focus-ring rounded-md text-2xl font-black tracking-normal text-slate-950 sm:text-3xl">
-          RecoverFit
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        <Link
+          href="/"
+          className="focus-ring max-w-[230px] rounded-md text-2xl font-black leading-tight tracking-normal text-slate-950 sm:max-w-none sm:text-4xl lg:text-[2.65rem]"
+        >
+          바른몸체형관리센터
         </Link>
         <nav aria-label="주요 메뉴" className="hidden items-center gap-7 lg:flex">
           {navItems.map((item) => (
@@ -34,7 +37,7 @@ export function Header() {
           aria-label={open ? "메뉴 닫기" : "메뉴 열기"}
           aria-expanded={open}
           onClick={() => setOpen((value) => !value)}
-          className="focus-ring inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-950 lg:hidden"
+          className="focus-ring inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-950 lg:hidden"
         >
           {open ? <X aria-hidden="true" size={20} /> : <Menu aria-hidden="true" size={20} />}
         </button>

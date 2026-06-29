@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL("https://rehab-exercise.example"),
   title: {
-    default: "리커버핏 | 프리미엄 재활운동",
-    template: "%s | 리커버핏",
+    default: "바른몸체형관리센터 | 프리미엄 재활운동",
+    template: "%s | 바른몸체형관리센터",
   },
   description:
     "목, 어깨, 허리, 무릎 통증부터 수술 후 회복까지. 움직임 평가 기반의 재활운동 프로그램과 상담 문의를 제공하는 전문 랜딩페이지입니다.",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     "물리치료 운동",
   ],
   openGraph: {
-    title: "재활운동 전문 랜딩페이지 | 통증 회복과 맞춤 운동",
+    title: "바른몸체형관리센터 | 프리미엄 재활운동",
     description:
       "움직임 평가 기반의 프리미엄 재활운동 프로그램과 상담 문의를 제공합니다.",
     type: "website",
