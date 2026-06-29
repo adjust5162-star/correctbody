@@ -33,6 +33,9 @@ http://localhost:3000/contact
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
+SUPABASE_SERVICE_ROLE_KEY=
+ADMIN_USERNAME=
+ADMIN_PASSWORD=
 ```
 
 환경변수가 없으면 사이트는 죽지 않습니다. 대신 상담 폼 제출 시 아래 안내가 표시됩니다.
@@ -43,6 +46,8 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=
 
 `service_role key`는 브라우저 코드에 사용하지 않습니다.
 
+`SUPABASE_SERVICE_ROLE_KEY`는 관리자 상담 문서 조회를 위한 서버 전용 환경변수입니다. `NEXT_PUBLIC_` 접두사를 붙이지 말고 Vercel 서버 환경변수로만 등록합니다.
+
 ## Vercel 환경변수 등록
 
 Vercel -> Project -> Settings -> Environment Variables
@@ -52,9 +57,24 @@ Vercel -> Project -> Settings -> Environment Variables
 ```env
 NEXT_PUBLIC_SUPABASE_URL
 NEXT_PUBLIC_SUPABASE_ANON_KEY
+SUPABASE_SERVICE_ROLE_KEY
+ADMIN_USERNAME
+ADMIN_PASSWORD
 ```
 
 `Production`, `Preview`, `Development`를 모두 체크한 뒤 Save 합니다. 환경변수를 새로 추가하거나 수정했다면 반드시 Redeploy 해야 합니다.
+
+## 관리자 상담 문서
+
+상담 접수 내역은 관리자 인증 후 아래 주소에서만 확인합니다.
+
+```txt
+https://correctbody.vercel.app/admin/contact-requests
+```
+
+브라우저 인증 창에는 Vercel 환경변수에 등록한 `ADMIN_USERNAME`과 `ADMIN_PASSWORD`를 입력합니다.
+
+관리자 페이지는 서버에서만 `SUPABASE_SERVICE_ROLE_KEY`를 사용해 `contact_requests` 테이블을 읽습니다. 이 키는 브라우저 코드나 `NEXT_PUBLIC_` 환경변수에 절대 넣지 않습니다.
 
 ## Supabase 마이그레이션 적용
 
@@ -124,6 +144,7 @@ npm run build
 - 상담 폼 표시
 - 네이버지도와 구글지도 버튼 작동
 - Supabase 환경변수 등록 후 상담 폼 제출 시 `contact_requests` 테이블에 데이터 저장
+- `/admin/contact-requests`는 관리자 계정으로만 열림
 
 ## 의료 정보 안내
 
