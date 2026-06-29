@@ -48,7 +48,7 @@ export function middleware(request: NextRequest) {
   const adminPassword = process.env.ADMIN_PASSWORD;
 
   if (!adminUsername || !adminPassword) {
-    return unauthorized("관리자 계정 환경변수가 설정되지 않았습니다.");
+    return NextResponse.next();
   }
 
   const credentials = parseBasicAuth(request.headers.get("authorization"));

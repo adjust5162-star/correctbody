@@ -16,23 +16,56 @@ function formatDate(value: string) {
   }).format(new Date(value));
 }
 
+const requiredAdminEnvVars = [
+  "ADMIN_USERNAME",
+  "ADMIN_PASSWORD",
+  "SUPABASE_SERVICE_ROLE_KEY",
+] as const;
+
+function getMissingAdminEnvVars() {
+  return requiredAdminEnvVars.filter((key) => !process.env[key]);
+}
+
+function AdminConfigNotice({ missingKeys }: { missingKeys: readonly string[] }) {
+  return (
+    <main className="min-h-screen bg-slate-50 px-4 py-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-4xl rounded-lg border border-amber-200 bg-amber-50 p-6 text-amber-950">
+        <p className="text-sm font-black uppercase tracking-[0.16em]">Admin</p>
+        <h1 className="mt-3 text-3xl font-black tracking-normal">
+          관리자 환경변수가 설정되지 않았습니다
+        </h1>
+        <p className="mt-4 leading-7">
+          Vercel Environment Variables에 ADMIN_USERNAME, ADMIN_PASSWORD,
+          SUPABASE_SERVICE_ROLE_KEY를 등록한 뒤 Redeploy 해주세요.
+        </p>
+        <p className="mt-4 leading-7">
+          SUPABASE_SERVICE_ROLE_KEY는 NEXT_PUBLIC_를 붙이지 않는 서버 전용
+          환경변수로만 등록해야 합니다.
+        </p>
+        {missingKeys.length > 0 ? (
+          <div className="mt-5 rounded-lg bg-white p-4">
+            <p className="text-sm font-black">누락된 환경변수</p>
+            <ul className="mt-3 space-y-2 text-sm font-bold">
+              {missingKeys.map((key) => (
+                <li key={key}>{key}</li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+      </div>
+    </main>
+  );
+}
+
 export default async function ContactRequestsAdminPage() {
+  const missingAdminEnvVars = getMissingAdminEnvVars();
+
+  if (missingAdminEnvVars.length > 0) {
+    return <AdminConfigNotice missingKeys={missingAdminEnvVars} />;
+  }
+
   if (!supabaseAdmin) {
-    return (
-      <main className="min-h-screen bg-slate-50 px-4 py-16 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-4xl rounded-lg border border-amber-200 bg-amber-50 p-6 text-amber-950">
-          <p className="text-sm font-black uppercase tracking-[0.16em]">Admin</p>
-          <h1 className="mt-3 text-3xl font-black tracking-normal">
-            Supabase 관리자 읽기 설정이 필요합니다
-          </h1>
-          <p className="mt-4 leading-7">
-            Vercel 환경변수에 `NEXT_PUBLIC_SUPABASE_URL`과 서버 전용
-            `SUPABASE_SERVICE_ROLE_KEY`를 등록한 뒤 Redeploy 해 주세요.
-            service role 키는 브라우저 코드에 노출하지 않습니다.
-          </p>
-        </div>
-      </main>
-    );
+    return <AdminConfigNotice missingKeys={["NEXT_PUBLIC_SUPABASE_URL"]} />;
   }
 
   const { data: requests, error } = await supabaseAdmin
