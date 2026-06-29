@@ -4,7 +4,7 @@ import { CTASection } from "@/components/CTASection";
 import { Section } from "@/components/Section";
 
 const centerName = "바른몸체형관리센터";
-const centerAddress = "부산광역시 기장군 기장읍 차성서로 9-1, 교리 가마치통닭 2층";
+const centerAddress = "부산광역시 기장군 기장읍 교리 342-12, 교리 가마치통닭 2층";
 const encodedQuery = encodeURIComponent(`${centerName} ${centerAddress}`);
 
 export const metadata: Metadata = {
