@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { contactMethods } from "@/data/site";
+import { isSupabaseConfigured, supabase } from "@/lib/supabase";
 
 type FormState = {
   name: string;
@@ -20,6 +21,9 @@ const initialState: FormState = {
   method: contactMethods[0],
   privacy: false,
 };
+
+const phoneFallbackMessage =
+  "온라인 저장 설정이 완료되지 않았습니다. 빠른 상담은 010-2048-2052로 전화해 주세요.";
 
 export function ContactForm() {
   const [form, setForm] = useState<FormState>(initialState);
@@ -48,22 +52,31 @@ export function ContactForm() {
       return;
     }
 
-    setStatus("loading");
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result?.message || "상담 문의 접수에 실패했습니다.");
-      setForm(initialState);
-      setStatus("success");
-      setError("");
-    } catch (caught) {
+    if (!isSupabaseConfigured || !supabase) {
       setStatus("error");
-      setError(caught instanceof Error ? caught.message : "상담 문의 접수에 실패했습니다.");
+      setError(phoneFallbackMessage);
+      return;
     }
+
+    setStatus("loading");
+    const { error: insertError } = await supabase.from("contact_requests").insert({
+      name: form.name,
+      phone: form.phone,
+      pain_area: form.area || null,
+      message: form.message || null,
+      contact_type: form.method || null,
+    });
+
+    if (insertError) {
+      console.error("Failed to save contact request", insertError);
+      setStatus("error");
+      setError(phoneFallbackMessage);
+      return;
+    }
+
+    setForm(initialState);
+    setStatus("success");
+    setError("");
   };
 
   return (
@@ -130,7 +143,14 @@ export function ContactForm() {
         />
         개인정보 수집 및 상담 목적 연락에 동의합니다.
       </label>
-      {error ? <p className="rounded-lg bg-orange-50 p-3 text-sm font-bold text-orange-700">{error}</p> : null}
+      {error ? (
+        <p className="rounded-lg bg-orange-50 p-3 text-sm font-bold text-orange-700">
+          {error}{" "}
+          <a className="underline" href="tel:+821020482052">
+            전화 상담
+          </a>
+        </p>
+      ) : null}
       {status === "success" ? (
         <p className="rounded-lg bg-emerald-50 p-3 text-sm font-bold text-emerald-700">
           상담 문의가 접수되었습니다. 확인 후 연락드리겠습니다.
