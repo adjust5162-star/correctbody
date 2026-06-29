@@ -42,9 +42,9 @@ export async function POST(request: Request) {
     const { error } = await supabase.from("contact_requests").insert({
       name: payload.name,
       phone: payload.phone,
-      area: payload.area || null,
+      pain_area: payload.area || null,
       message: payload.message || null,
-      method: payload.method || null,
+      contact_type: payload.method || null,
     });
 
     if (error) {

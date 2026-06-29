@@ -6,27 +6,27 @@ export type Database = {
           id: string;
           name: string;
           phone: string;
-          area: string | null;
+          pain_area: string | null;
           message: string | null;
-          method: string | null;
+          contact_type: string | null;
           created_at: string;
         };
         Insert: {
           id?: string;
           name: string;
           phone: string;
-          area?: string | null;
+          pain_area?: string | null;
           message?: string | null;
-          method?: string | null;
+          contact_type?: string | null;
           created_at?: string;
         };
         Update: {
           id?: string;
           name?: string;
           phone?: string;
-          area?: string | null;
+          pain_area?: string | null;
           message?: string | null;
-          method?: string | null;
+          contact_type?: string | null;
           created_at?: string;
         };
         Relationships: [];
