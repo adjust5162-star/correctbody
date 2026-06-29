@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSupabaseAdmin } from "@/lib/supabase";
+import { getSupabaseServerClient } from "@/lib/supabase";
 
 type ContactPayload = {
   name?: string;
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: "개인정보 수집 동의가 필요합니다." }, { status: 400 });
   }
 
-  const supabase = getSupabaseAdmin();
+  const supabase = getSupabaseServerClient();
 
   if (!supabase && process.env.NODE_ENV === "production") {
     return NextResponse.json(
