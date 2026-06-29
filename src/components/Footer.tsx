@@ -15,7 +15,7 @@ export function Footer() {
               {item.label}
             </Link>
           ))}
-          <Link href="#contact" className="font-bold text-white">
+          <Link href="/contact" className="font-bold text-white">
             상담 문의
           </Link>
         </nav>

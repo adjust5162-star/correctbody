@@ -27,7 +27,7 @@ export function HeroSection() {
             단계별 재활운동으로 회복을 돕습니다.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <ButtonLink href="#contact">상담 문의하기</ButtonLink>
+            <ButtonLink href="/contact">상담 문의하기</ButtonLink>
             <ButtonLink href="#programs" variant="ghost">
               프로그램 보기
             </ButtonLink>

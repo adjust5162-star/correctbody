@@ -30,7 +30,7 @@ export function Header() {
           ))}
         </nav>
         <div className="hidden lg:block">
-          <ButtonLink href="#contact">상담 문의하기</ButtonLink>
+          <ButtonLink href="/contact">상담 문의하기</ButtonLink>
         </div>
         <button
           type="button"
@@ -56,7 +56,7 @@ export function Header() {
               </Link>
             ))}
           </nav>
-          <ButtonLink href="#contact">상담 문의하기</ButtonLink>
+          <ButtonLink href="/contact">상담 문의하기</ButtonLink>
         </div>
       ) : null}
     </header>
